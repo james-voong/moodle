@@ -98,6 +98,29 @@ class api {
     }
 
     /**
+     * See if there is a match for this idnumber and issuer in the linked_login table.
+     *
+     * @param string $idnumber as returned from an oauth client.
+     * @param \core\oauth2\issuer $issuer
+     * @return stdClass User record if found.
+     */
+    public static function match_idnumber_to_user($idnumber, $issuer) {
+        $params = [
+            'issuerid' => $issuer->get('id'),
+            'username' => $idnumber
+        ];
+        $result = linked_login::get_record($params);
+
+        if ($result) {
+            $user = \core_user::get_user($result->get('userid'));
+            if (!empty($user) && !$user->deleted) {
+                return $result;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Link a login to this account.
      *
      * Requires auth/oauth2:managelinkedlogins capability at the user context.
@@ -115,7 +138,7 @@ class api {
             $userid = $USER->id;
         }
 
-        if (linked_login::has_existing_issuer_match($issuer, $userinfo['username'])) {
+        if (linked_login::has_existing_issuer_match($issuer, $userinfo['idnumber'])) {
             throw new moodle_exception('alreadylinked', 'auth_oauth2');
         }
 
@@ -130,7 +153,7 @@ class api {
 
         $record = new stdClass();
         $record->issuerid = $issuer->get('id');
-        $record->username = $userinfo['username'];
+        $record->username = $userinfo['idnumber'];
         $record->userid = $userid;
         $existing = linked_login::get_record((array)$record);
         if ($existing) {

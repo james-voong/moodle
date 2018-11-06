@@ -398,7 +398,7 @@ class auth extends \auth_plugin_base {
         }
 
         // First we try and find a defined mapping.
-        $linkedlogin = api::match_username_to_user($userinfo['username'], $client->get_issuer());
+        $linkedlogin = api::match_idnumber_to_user($userinfo['idnumber'], $client->get_issuer());
 
         if (!empty($linkedlogin) && empty($linkedlogin->get('confirmtoken'))) {
             $mappeduser = get_complete_user_data('id', $linkedlogin->get('userid'));
@@ -469,12 +469,13 @@ class auth extends \auth_plugin_base {
         if (!$userwasmapped) {
             // No defined mapping - we need to see if there is an existing account with the same email.
 
-            $moodleuser = \core_user::get_user_by_email($userinfo['email']);
+            $moodleuser = \core_user::get_user_by_idnumber($userinfo['idnumber']);
             if (!empty($moodleuser)) {
                 if ($issuer->get('requireconfirmation')) {
                     $PAGE->set_url('/auth/oauth2/confirm-link-login.php');
                     $PAGE->set_context(context_system::instance());
 
+                    // This function may need modification if requiring email confirmation is needed.
                     \auth_oauth2\api::send_confirm_link_login_email($userinfo, $issuer, $moodleuser->id);
                     // Request to link to existing account.
                     $emailconfirm = get_string('emailconfirmlink', 'auth_oauth2');
