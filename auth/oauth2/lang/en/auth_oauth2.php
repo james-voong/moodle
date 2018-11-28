@@ -100,3 +100,6 @@ $string['privacy:metadata:auth_oauth2:timemodified'] = 'The timestamp when this 
 $string['privacy:metadata:auth_oauth2:userid'] = 'The ID of the user account which the OAuth 2 login is linked to.';
 $string['privacy:metadata:auth_oauth2:usermodified'] = 'The ID of the user who modified this account.';
 $string['privacy:metadata:auth_oauth2:username'] = 'The external username that maps to this account.';
+$string['loggedouttitle'] = 'Logged Out';
+$string['youareloggedout'] = 'You have successfully logged out.';
+$string['loggedoutlong'] = 'You have been logged out. Click to <a href="/">log back in</a>';
