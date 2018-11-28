@@ -417,6 +417,14 @@ class auth extends \auth_plugin_base {
                 $client->log_out();
                 redirect(new moodle_url('/login/index.php'));
             } else if ($mappeduser && $mappeduser->confirmed) {
+
+                // Customisation to update user fields via oauth.
+                $user = (object) $userinfo;
+                $user->id = $mappeduser->id;
+                require_once($CFG->dirroot . '/user/lib.php');
+                user_update_user($user, false, false);
+                profile_save_data($user);
+
                 $userinfo = (array) $mappeduser;
                 $userwasmapped = true;
             } else {
@@ -474,6 +482,14 @@ class auth extends \auth_plugin_base {
                     $this->print_confirm_required($emailconfirm, $message);
                     exit();
                 } else {
+                    // Customisation to update user fields via oauth.
+                    $user = (object) $userinfo;
+                    $user->id = $moodleuser->id;
+                    require_once($CFG->dirroot . '/user/lib.php');
+                    require_once($CFG->dirroot . '/user/profile/lib.php');
+                    user_update_user($user, false, false);
+                    profile_save_data($user);
+
                     \auth_oauth2\api::link_login($userinfo, $issuer, $moodleuser->id, true);
                     $userinfo = get_complete_user_data('id', $moodleuser->id);
                     // No redirect, we will complete this login.

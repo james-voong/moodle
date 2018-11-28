@@ -3350,6 +3350,11 @@ EOD;
             );
         }
 
+        // Make navbar display the name updated via oauth.
+        $latestuserinfo = \core_user::get_user($user->id);
+        $user->firstname = $latestuserinfo->firstname;
+        $user->lastname = $latestuserinfo->lastname;
+
         // Get some navigation opts.
         $opts = user_get_user_navigation_info($user, $this->page);
 
