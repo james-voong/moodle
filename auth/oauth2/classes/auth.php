@@ -539,7 +539,7 @@ class auth extends \auth_plugin_base {
                     $errormsg = get_string('notloggedindebug', 'auth_oauth2', $reason);
                     $SESSION->loginerrormsg = $errormsg;
                     $client->log_out();
-                    redirect(new moodle_url('/login/index.php'));
+                    redirect(new moodle_url('/login/failedlogin.php'));
                 }
 
                 if ($issuer->get('requireconfirmation')) {

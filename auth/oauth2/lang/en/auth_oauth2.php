@@ -103,3 +103,6 @@ $string['privacy:metadata:auth_oauth2:username'] = 'The external username that m
 $string['loggedouttitle'] = 'Logged Out';
 $string['youareloggedout'] = 'You have successfully logged out.';
 $string['loggedoutlong'] = 'You have been logged out. Click to <a href="/">log back in</a>';
+$string['failedlogintitle'] = 'Failed to Login';
+$string['faillogintext'] = 'You do not have an account in Moodle. Please contact your system administrator to get one';
+$string['tryagainlink'] = 'You have failed to login. Click <a href="/">here</a> to try again';

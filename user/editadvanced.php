@@ -66,7 +66,7 @@ if ($id == -1) {
     // Creating new user.
     $user = new stdClass();
     $user->id = -1;
-    $user->auth = 'manual';
+    $user->auth = 'oauth2';
     $user->confirmed = 1;
     $user->deleted = 0;
     $user->timezone = '99';
