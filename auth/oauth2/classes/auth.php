@@ -422,6 +422,9 @@ class auth extends \auth_plugin_base {
                 $user = (object) $userinfo;
                 $user->id = $mappeduser->id;
                 require_once($CFG->dirroot . '/user/lib.php');
+                if (!empty($user->idnumber)) {
+                    $user->username = $user->idnumber;
+                }
                 user_update_user($user, false, false);
                 profile_save_data($user);
 
@@ -488,6 +491,9 @@ class auth extends \auth_plugin_base {
                     $user->id = $moodleuser->id;
                     require_once($CFG->dirroot . '/user/lib.php');
                     require_once($CFG->dirroot . '/user/profile/lib.php');
+                    if (!empty($user->idnumber)) {
+                        $user->username = $user->idnumber;
+                    }
                     user_update_user($user, false, false);
                     profile_save_data($user);
 
